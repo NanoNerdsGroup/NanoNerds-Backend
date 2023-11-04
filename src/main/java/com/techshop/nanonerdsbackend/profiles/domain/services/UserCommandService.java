@@ -1,9 +1,9 @@
 package com.techshop.nanonerdsbackend.profiles.domain.services;
 
-import com.techshop.nanonerdsbackend.profiles.domain.model.commands.AddSellerInformationForSellerFunctionsCommand;
-import com.techshop.nanonerdsbackend.profiles.domain.model.commands.AddSubscriptionCommand;
-import com.techshop.nanonerdsbackend.profiles.domain.model.commands.RegisterUserCommand;
-import com.techshop.nanonerdsbackend.profiles.domain.model.commands.UpdateUserInformationCommand;
+import com.techshop.nanonerdsbackend.profiles.domain.model.aggregates.User;
+import com.techshop.nanonerdsbackend.profiles.domain.model.commands.*;
+
+import java.util.Optional;
 
 public interface UserCommandService {
 
@@ -13,5 +13,8 @@ public interface UserCommandService {
 
     void execute(AddSubscriptionCommand command);
 
-    boolean execute (RegisterUserCommand command);
+    Optional<User> execute (RegisterUserCommand command);
+
+
+
 }

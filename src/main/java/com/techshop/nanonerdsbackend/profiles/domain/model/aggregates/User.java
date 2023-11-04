@@ -39,7 +39,7 @@ public class User  extends AuditableModel {
     public User(){
 
     }
-    public User(String firstName, String lastname, String email, String phone, String password, String codeCountry, String phoneNumber) {
+    public User(String firstName, String lastname, String email, String password, String codeCountry, String phoneNumber) {
         this.customerProfile = new CustomerProfile(
                 new PersonName(firstName, lastname),
                 new EmailAddress(email),
@@ -48,9 +48,8 @@ public class User  extends AuditableModel {
         );
     }
 
-    public User(CustomerProfile customerProfile, SellerProfile sellerProfile) {
+    public User(CustomerProfile customerProfile) {
         this.customerProfile=customerProfile;
-        this.sellerProfile=sellerProfile;
     }
 
     public boolean validateSellerFunctions(){
@@ -75,6 +74,8 @@ public class User  extends AuditableModel {
         }
         return false;
     }
+
+
 
 
 }
