@@ -13,8 +13,7 @@ public interface UserCommandService {
 
     void execute(AddSubscriptionCommand command);
 
-    Optional<User> execute (RegisterUserCommand command);
+    Optional<User> execute(RegisterUserCommand command);
 
-
-
+    void addToFavorites(Long userId, Long componentId);
 }

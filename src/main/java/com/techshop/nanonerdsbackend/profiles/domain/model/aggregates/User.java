@@ -76,6 +76,6 @@ public class User  extends AuditableModel {
     }
 
 
-
-
+    public void addToFavorites(Long componentId) {
+    }
 }
