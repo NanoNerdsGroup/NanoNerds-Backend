@@ -1,4 +1,4 @@
-package com.techshop.nanonerdsbackend.profiles.application.internal.commandservices;
+package com.techshop.nanonerdsbackend.profiles.interfaces.rest;
 
 import com.techshop.nanonerdsbackend.profiles.domain.model.aggregates.User;
 import com.techshop.nanonerdsbackend.profiles.domain.model.commands.*;
@@ -22,7 +22,6 @@ public class UserCommandServiceImpl implements UserCommandService {
     CustomerProfileRepository customerProfileRepository;
 
     public UserCommandServiceImpl(UserRepository userRepository, CustomerProfileRepository customerProfileRepository){
-
         this.userRepository = userRepository;
         this.customerProfileRepository =  customerProfileRepository;
     }
@@ -39,7 +38,6 @@ public class UserCommandServiceImpl implements UserCommandService {
 
     @Override
     public boolean execute(AddSellerInformationForSellerFunctionsCommand command){
-
         Optional<User> userOptional = userRepository.findUserById(command.userId());
         SellerProfile sellerProfile;
         if (userOptional.isPresent()) {
@@ -50,10 +48,8 @@ public class UserCommandServiceImpl implements UserCommandService {
             }
             user.updateUserInformation(null, command.sellerUpdateInformation());
             userRepository.save(user);
-
             return true;
         }
-
         return false;
     }
 
@@ -68,7 +64,6 @@ public class UserCommandServiceImpl implements UserCommandService {
 
     @Override
     public Optional<User> execute(RegisterUserCommand command) {
-
         String firstName = command.firstName();
         String lastName = command.lastName();
         String email = command.email();
@@ -80,7 +75,7 @@ public class UserCommandServiceImpl implements UserCommandService {
                 email == null || email.isBlank() || password == null
                 || password.isBlank() || codeCountry == null || codeCountry.isBlank() || phoneNumber == null
                 || phoneNumber.isBlank()) {
-            return null;
+            return Optional.empty();
         }
 
         CustomerProfile newCustomerProfile = new CustomerProfile(new PersonName(firstName, lastName),
@@ -92,5 +87,11 @@ public class UserCommandServiceImpl implements UserCommandService {
         return Optional.of(newUser);
     }
 
+    @Override
+    public void addToFavorites(Long userId, Long componentId) {
+        userRepository.findUserById(userId).ifPresent(user -> {
+            user.addToFavorites(componentId);
+            userRepository.save(user);
+        });
+    }
 }
-
