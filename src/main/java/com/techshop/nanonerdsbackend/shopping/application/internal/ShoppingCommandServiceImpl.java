@@ -3,7 +3,7 @@ package com.techshop.nanonerdsbackend.shopping.application.internal;
 import com.techshop.nanonerdsbackend.shopping.domain.model.Commands.AddCreditCardCommand;
 import com.techshop.nanonerdsbackend.shopping.domain.model.Commands.AddToShoppingCartCommand;
 import com.techshop.nanonerdsbackend.shopping.domain.model.Commands.RemoveFromShoppingCartCommand;
-import com.techshop.nanonerdsbackend.shopping.domain.model.aggregates.CreditCard;
+
 import com.techshop.nanonerdsbackend.shopping.domain.model.aggregates.ShoppingCart;
 import com.techshop.nanonerdsbackend.shopping.domain.model.entity.CreditCardEntity;
 import com.techshop.nanonerdsbackend.shopping.domain.model.entity.ShoppingCartItem;
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+
 @Service
 public class ShoppingCommandServiceImpl implements ShoppingCommandService {
 
@@ -31,13 +32,14 @@ public class ShoppingCommandServiceImpl implements ShoppingCommandService {
         this.creditCardRepository = creditCardRepository;
     }
 
+
     @Override
     public void addToShoppingCart(AddToShoppingCartCommand command) {
-     ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(command.userId())
-             .orElseGet(() -> new ShoppingCart(command.userId()));
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(command.userId())
+                .orElseGet(() -> new ShoppingCart(command.userId()));
 
-     ShoppingCartItem newItem = new ShoppingCartItem(componentRepository.findById(command.componentId()).orElseThrow(),
-             command.quantity());
+        ShoppingCartItem newItem = new ShoppingCartItem(componentRepository.findById(command.componentId()).orElseThrow(),
+                command.quantity());
 
         Optional<ShoppingCartItem> existingItem =shoppingCart.findItemById(command.componentId());
         if (existingItem.isPresent()) {
@@ -47,6 +49,7 @@ public class ShoppingCommandServiceImpl implements ShoppingCommandService {
         }
         shoppingCartRepository.save(shoppingCart);
     }
+
 
     @Override
     @Transactional
@@ -68,7 +71,8 @@ public class ShoppingCommandServiceImpl implements ShoppingCommandService {
         }
     }
     private boolean isValidCreditCardNumber(String creditCardNumber) {
-        // Lógica de validación de la tarjeta de crédito
+        //  validación de la tarjeta de crédito
         return creditCardNumber.matches("\\d{16}");
     }
 }
+
