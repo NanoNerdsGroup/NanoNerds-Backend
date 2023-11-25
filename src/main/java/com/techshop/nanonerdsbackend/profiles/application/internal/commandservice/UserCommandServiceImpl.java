@@ -1,4 +1,4 @@
-package com.techshop.nanonerdsbackend.profiles.interfaces.rest;
+package com.techshop.nanonerdsbackend.profiles.application.internal.commandservice;
 
 import com.techshop.nanonerdsbackend.profiles.domain.model.aggregates.User;
 import com.techshop.nanonerdsbackend.profiles.domain.model.commands.*;
@@ -27,17 +27,17 @@ public class UserCommandServiceImpl implements UserCommandService {
     }
 
     @Override
-    public boolean execute(UpdateUserInformationCommand command) {
+    public Optional<User> execute(UpdateUserInformationCommand command) {
         userRepository.findUserById(command.userId()).map(user -> {
             user.updateUserInformation(command.customerUpdatedInformation(), command.sellerUpdatedInformation());
             userRepository.save(user);
-            return true;
+            return user;
         }).orElseThrow(()-> new RuntimeException("User not found"));
-        return true;
+        return Optional.empty();
     }
 
     @Override
-    public boolean execute(AddSellerInformationForSellerFunctionsCommand command){
+    public Optional<User> execute(AddSellerInformationForSellerFunctionsCommand command){
         Optional<User> userOptional = userRepository.findUserById(command.userId());
         SellerProfile sellerProfile;
         if (userOptional.isPresent()) {
@@ -48,9 +48,9 @@ public class UserCommandServiceImpl implements UserCommandService {
             }
             user.updateUserInformation(null, command.sellerUpdateInformation());
             userRepository.save(user);
-            return true;
+            return Optional.of(user);
         }
-        return false;
+        return Optional.empty();
     }
 
     @Override
@@ -85,13 +85,5 @@ public class UserCommandServiceImpl implements UserCommandService {
         User newUser = new User(newCustomerProfile);
         userRepository.save(newUser);
         return Optional.of(newUser);
-    }
-
-    @Override
-    public void addToFavorites(Long userId, Long componentId) {
-        userRepository.findUserById(userId).ifPresent(user -> {
-            user.addToFavorites(componentId);
-            userRepository.save(user);
-        });
     }
 }

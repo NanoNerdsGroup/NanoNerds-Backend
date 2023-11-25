@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface UserQueryService {
 
-    boolean execute (GetValidationSellerFunctionsQuery query);
+    Optional<User> execute (GetValidationSellerFunctionsQuery query);
 
     Optional<User> execute (GetUserByIdQuery query);
 

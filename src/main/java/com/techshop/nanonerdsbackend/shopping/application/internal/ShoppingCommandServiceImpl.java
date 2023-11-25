@@ -1,5 +1,6 @@
 package com.techshop.nanonerdsbackend.shopping.application.internal;
 
+import com.techshop.nanonerdsbackend.administration.infraestructure.persistence.repositories.ComponentRepository;
 import com.techshop.nanonerdsbackend.shopping.domain.model.Commands.AddCreditCardCommand;
 import com.techshop.nanonerdsbackend.shopping.domain.model.Commands.AddToShoppingCartCommand;
 import com.techshop.nanonerdsbackend.shopping.domain.model.Commands.RemoveFromShoppingCartCommand;
@@ -9,7 +10,6 @@ import com.techshop.nanonerdsbackend.shopping.domain.model.entity.CreditCardEnti
 import com.techshop.nanonerdsbackend.shopping.domain.model.entity.ShoppingCartItem;
 
 import com.techshop.nanonerdsbackend.shopping.domain.services.ShoppingCommandService;
-import com.techshop.nanonerdsbackend.shopping.infraestructure.persistence.jpa.repositories.ComponentRepository;
 import com.techshop.nanonerdsbackend.shopping.infraestructure.persistence.jpa.repositories.CreditCardRepository;
 import com.techshop.nanonerdsbackend.shopping.infraestructure.persistence.jpa.repositories.ShoppingCartRepository;
 import jakarta.persistence.EntityNotFoundException;

@@ -1,6 +1,6 @@
 package com.techshop.nanonerdsbackend.searchcomponents.interfaces.rest.resources;
 
-import com.techshop.nanonerdsbackend.searchcomponents.domain.model.entities.Component;
+import com.techshop.nanonerdsbackend.administration.domain.model.aggregates.Component;
 
-public record AddComponentInMyFavoritesResource(Long idMyFavorites, Component newComponent) {
+public record AddComponentInMyFavoritesCommandResource(Long idMyFavorites, Component newComponent) {
 }

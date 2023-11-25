@@ -7,13 +7,11 @@ import java.util.Optional;
 
 public interface UserCommandService {
 
-    boolean execute(UpdateUserInformationCommand command);
+    Optional<User> execute(UpdateUserInformationCommand command);
 
-    boolean execute(AddSellerInformationForSellerFunctionsCommand command);
+    Optional<User> execute(AddSellerInformationForSellerFunctionsCommand command);
 
     void execute(AddSubscriptionCommand command);
 
     Optional<User> execute(RegisterUserCommand command);
-
-    void addToFavorites(Long userId, Long componentId);
 }

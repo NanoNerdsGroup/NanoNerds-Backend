@@ -1,7 +1,5 @@
-package com.techshop.nanonerdsbackend.searchcomponents.interfaces.rest.resources;
+package com.techshop.nanonerdsbackend.administration.interfaces.rest.resource;
 
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Date;
 

@@ -1,6 +1,9 @@
 package com.techshop.nanonerdsbackend.administration.domain.services;
 
 import com.techshop.nanonerdsbackend.administration.domain.model.aggregates.Component;
+import com.techshop.nanonerdsbackend.administration.domain.model.commands.CreateComponentCommand;
+import com.techshop.nanonerdsbackend.administration.domain.model.commands.DeleteComponentCommand;
+import com.techshop.nanonerdsbackend.administration.domain.model.commands.UpdateComponentCommand;
 import com.techshop.nanonerdsbackend.administration.domain.model.queries.GetComponentByIdQuery;
 import com.techshop.nanonerdsbackend.searchcomponents.domain.model.queries.GetComponentsByNameQuery;
 import com.techshop.nanonerdsbackend.searchcomponents.domain.model.queries.GetComponentsByRequirementQuery;
@@ -8,12 +11,12 @@ import com.techshop.nanonerdsbackend.searchcomponents.domain.model.queries.GetCo
 import java.util.List;
 import java.util.Optional;
 
-public interface ComponentQueryService {
+public interface ComponentCommandService {
 
-    Optional<Component> execute(GetComponentByIdQuery query);
+    Optional<Component> execute(CreateComponentCommand command);
 
-    List<Component> execute(GetComponentsByNameQuery query);
+    boolean execute(DeleteComponentCommand command);
 
-    List<Component> execute(GetComponentsByRequirementQuery query);
+    Optional<Component> execute(UpdateComponentCommand command);
 
 }

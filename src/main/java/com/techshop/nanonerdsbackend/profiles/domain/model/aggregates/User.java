@@ -7,6 +7,7 @@ import com.techshop.nanonerdsbackend.profiles.domain.model.valueobjects.EmailAdd
 import com.techshop.nanonerdsbackend.profiles.domain.model.valueobjects.PersonName;
 import com.techshop.nanonerdsbackend.profiles.domain.model.valueobjects.PhoneNumber;
 import com.techshop.nanonerdsbackend.profiles.domain.model.valueobjects.SuscriptionPack;
+import com.techshop.nanonerdsbackend.searchcomponents.domain.model.aggregates.MyFavorites;
 import com.techshop.nanonerdsbackend.share.domain.model.entities.AuditableModel;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -35,6 +36,8 @@ public class User  extends AuditableModel {
     @Embedded
     private SuscriptionPack subscriptionPack;
 
+    @OneToOne
+    private MyFavorites myFavorites;
 
     public User(){
 

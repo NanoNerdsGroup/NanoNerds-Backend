@@ -1,4 +1,4 @@
-package com.techshop.nanonerdsbackend.searchcomponents.application.internal.queryservice;
+package com.techshop.nanonerdsbackend.administration.application.internal.queryservices;
 
 import com.techshop.nanonerdsbackend.administration.domain.model.aggregates.Component;
 import com.techshop.nanonerdsbackend.administration.domain.model.queries.GetComponentByIdQuery;

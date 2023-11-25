@@ -1,4 +1,4 @@
-package com.techshop.nanonerdsbackend.searchcomponents.infraestructure.persistance.repositories;
+package com.techshop.nanonerdsbackend.administration.infraestructure.persistence.repositories;
 
 import com.techshop.nanonerdsbackend.administration.domain.model.aggregates.Component;
 import org.springframework.data.jpa.repository.JpaRepository;

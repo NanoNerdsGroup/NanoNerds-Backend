@@ -1,6 +1,6 @@
-package com.techshop.nanonerdsbackend.searchcomponents.interfaces.rest.transform;
+package com.techshop.nanonerdsbackend.administration.interfaces.rest.transform;
 import com.techshop.nanonerdsbackend.administration.domain.model.aggregates.Component;
-import com.techshop.nanonerdsbackend.searchcomponents.interfaces.rest.resources.ComponentResource;
+import com.techshop.nanonerdsbackend.administration.interfaces.rest.resource.ComponentResource;
 
 public class ComponentResourceFromEntityAssembler {
 

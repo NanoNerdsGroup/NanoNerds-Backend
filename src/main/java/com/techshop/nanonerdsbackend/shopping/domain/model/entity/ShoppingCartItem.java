@@ -1,14 +1,14 @@
 package com.techshop.nanonerdsbackend.shopping.domain.model.entity;
 
 
-import com.techshop.nanonerdsbackend.searchcomponents.domain.model.entities.Component;
+import com.techshop.nanonerdsbackend.administration.domain.model.aggregates.Component;
 import com.techshop.nanonerdsbackend.shopping.domain.model.aggregates.ShoppingCart;
 import jakarta.persistence.*;
 import lombok.Getter;
 
 @Getter
 @Entity
-public class ShoppingCartItem {
+public class ShoppingCartItem extends Component {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

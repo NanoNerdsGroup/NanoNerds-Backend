@@ -1,9 +1,12 @@
 package com.techshop.nanonerdsbackend.profiles.domain.model.entity;
 
+import com.techshop.nanonerdsbackend.administration.domain.model.aggregates.Component;
 import com.techshop.nanonerdsbackend.profiles.domain.model.valueobjects.StreetAddress;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 public class SellerProfile {
@@ -22,6 +25,10 @@ public class SellerProfile {
     @Embedded
     @Getter
     private StreetAddress address; //Columna street, number, city, zipcode y country
+
+    @OneToMany(mappedBy = "sellerProfile", cascade =  CascadeType.ALL)
+    @Getter
+    private List<Component> components;
 
     public SellerProfile() {
         this.ruc = null;

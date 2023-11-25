@@ -22,15 +22,15 @@ public class UserQueryServiceImpl implements UserQueryService {
     }
 
     @Override
-    public boolean execute(GetValidationSellerFunctionsQuery query) {
+    public Optional<User> execute(GetValidationSellerFunctionsQuery query) {
         Optional<User> userOptional = userRepository.findUserById(query.userId());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             if (user.getSellerProfile() != null && user.getSellerProfile().getRuc() != null && user.getSellerProfile().getRuc() != 0) {
-                return true;
+                return userOptional;
             }
         }
-        return false;
+        return Optional.empty();
     }
 
     @Override

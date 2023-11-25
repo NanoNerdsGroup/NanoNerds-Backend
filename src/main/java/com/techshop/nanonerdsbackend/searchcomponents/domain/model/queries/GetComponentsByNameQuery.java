@@ -1,2 +1,4 @@
-package com.techshop.nanonerdsbackend.searchcomponents.domain.model.queries;public class GetComponentsByNameQuery {
+package com.techshop.nanonerdsbackend.searchcomponents.domain.model.queries;
+
+public record GetComponentsByNameQuery(String searchedName) {
 }

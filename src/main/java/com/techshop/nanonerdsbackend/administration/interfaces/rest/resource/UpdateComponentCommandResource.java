@@ -1,8 +1,8 @@
-package com.techshop.nanonerdsbackend.administration.domain.model.commands;
+package com.techshop.nanonerdsbackend.administration.interfaces.rest.resource;
 
 import java.util.Date;
 
-public record UpdateComponentCommand(
+public record UpdateComponentCommandResource(
 
         Long id,
         double price,

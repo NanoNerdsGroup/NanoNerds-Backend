@@ -4,12 +4,16 @@ import com.techshop.nanonerdsbackend.profiles.domain.exceptions.ComponentNotFoun
 import com.techshop.nanonerdsbackend.profiles.domain.exceptions.UserNotFoundException;
 import com.techshop.nanonerdsbackend.profiles.domain.model.aggregates.User;
 import com.techshop.nanonerdsbackend.profiles.domain.model.queries.GetUserByIdQuery;
+import com.techshop.nanonerdsbackend.profiles.domain.model.queries.GetValidationSellerFunctionsQuery;
 import com.techshop.nanonerdsbackend.profiles.domain.services.UserCommandService;
 import com.techshop.nanonerdsbackend.profiles.domain.services.UserQueryService;
 import com.techshop.nanonerdsbackend.profiles.interfaces.rest.resources.CreateUserResource;
+import com.techshop.nanonerdsbackend.profiles.interfaces.rest.resources.UpdateUserResource;
 import com.techshop.nanonerdsbackend.profiles.interfaces.rest.resources.UserResource;
 import com.techshop.nanonerdsbackend.profiles.interfaces.rest.transform.CreateUserCommandFromResourceAssembler;
+import com.techshop.nanonerdsbackend.profiles.interfaces.rest.transform.UpdateUserResourceAssembler;
 import com.techshop.nanonerdsbackend.profiles.interfaces.rest.transform.UserResourceFromEntityAssembler;
+import org.hibernate.sql.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +47,17 @@ public class ProfileController {
         return ResponseEntity.ok(userResource);
     }
 
+    @GetMapping("/validate-seller-information/{userId}")
+    public ResponseEntity<UserResource> getValidationOfSellerInformation(@PathVariable Long userId) {
+        var getValidationSellerFunctionsQuery= new GetValidationSellerFunctionsQuery(userId);
+        var user = userQueryService.execute(getValidationSellerFunctionsQuery);
+        if (user.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        var userResource = UserResourceFromEntityAssembler.toResourceFromEntity(user.get());
+        return ResponseEntity.ok(userResource);
+    }
+
     // POST
     @PostMapping("/register")
     public ResponseEntity<UserResource> createUser(@RequestBody CreateUserResource resource) {
@@ -64,7 +79,29 @@ public class ProfileController {
         return new ResponseEntity<>(userResource, HttpStatus.CREATED);
     }
 
-    // POST - Agregar a favoritos
+    @PostMapping("/update")
+    public ResponseEntity<UserResource> updateUser(@RequestBody UpdateUserResource resource){
+        var updateUserCommand = UpdateUserResourceAssembler.toCommandFromResource(resource);
+        Optional<User> user = userCommandService.execute(updateUserCommand);
+
+        if (user.isEmpty()){
+            return ResponseEntity.badRequest().build();
+        }
+
+        var getUserByIdQuery = new GetUserByIdQuery(user.get().getId());
+        Optional<User> userUpdated = userQueryService.execute(getUserByIdQuery);
+
+        if (userUpdated.isEmpty()){
+            return ResponseEntity.badRequest().build();
+        }
+
+        var userResource = UserResourceFromEntityAssembler.toResourceFromEntity(userUpdated.get());
+        return new ResponseEntity<>(userResource, HttpStatus.CREATED);
+    }
+
+
+
+    /* POST - Agregar a favoritos
     @PostMapping("/add-to-favorites/{userId}/{componentId}")
     public ResponseEntity<String> addToFavorites(@PathVariable Long userId, @PathVariable Long componentId) {
         try {
@@ -75,5 +112,5 @@ public class ProfileController {
         } catch (ComponentNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
-    }
+    }*/
 }

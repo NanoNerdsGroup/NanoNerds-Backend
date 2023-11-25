@@ -1,12 +1,12 @@
 package com.techshop.nanonerdsbackend.searchcomponents.interfaces.rest;
 import com.techshop.nanonerdsbackend.administration.domain.model.aggregates.Component;
-import com.techshop.nanonerdsbackend.administration.domain.model.queries.GetComponentByIdQuery;
+import com.techshop.nanonerdsbackend.administration.interfaces.acl.ComponentContextFacade;
 import com.techshop.nanonerdsbackend.searchcomponents.domain.model.queries.GetComponentsByNameQuery;
 import com.techshop.nanonerdsbackend.searchcomponents.domain.model.queries.GetComponentsByRequirementQuery;
 import com.techshop.nanonerdsbackend.searchcomponents.domain.model.valueobject.Requirement;
 import com.techshop.nanonerdsbackend.administration.domain.services.ComponentQueryService;
-import com.techshop.nanonerdsbackend.searchcomponents.interfaces.rest.resources.ComponentResource;
-import com.techshop.nanonerdsbackend.searchcomponents.interfaces.rest.transform.ComponentResourceFromEntityAssembler;
+import com.techshop.nanonerdsbackend.administration.interfaces.rest.resource.ComponentResource;
+import com.techshop.nanonerdsbackend.administration.interfaces.rest.transform.ComponentResourceFromEntityAssembler;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,16 +18,14 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RestController
 @RequestMapping(value = "/api/v1/components", produces = MediaType.APPLICATION_JSON_VALUE)
-public class ComponentController {
+public class SearchComponentController {
 
-    private final ComponentQueryService componentQueryService;
-
+    private final ComponentContextFacade componentContextFacade;
 
     //GET
     @GetMapping("/{componentId}")
     public ResponseEntity<ComponentResource> getComponentById(@PathVariable Long componentId){
-        var getComponentById = new GetComponentByIdQuery(componentId);
-        var component = componentQueryService.execute(getComponentById);
+        var component = componentContextFacade.getComponentById(componentId);
         if (component.isEmpty()){
             return ResponseEntity.notFound().build();
         }
@@ -38,7 +36,8 @@ public class ComponentController {
     @GetMapping("/{componentName}")
     public ResponseEntity<List<ComponentResource>> getComponentsByName(@PathVariable String SearchedName){
         var getComponentsByName = new GetComponentsByNameQuery(SearchedName);
-        List<Component> components = componentQueryService.execute(getComponentsByName);
+        List<Component> components = componentContextFacade.getComponentQueryService().execute(getComponentsByName);
+
         if (components.isEmpty()){
             return ResponseEntity.notFound().build();
         }
@@ -52,7 +51,7 @@ public class ComponentController {
     @GetMapping("/requirement")
     public ResponseEntity<List<ComponentResource>> getComponentsByRequirement(@RequestBody Requirement requirement){
         var getComponentByRequirement = new GetComponentsByRequirementQuery(requirement);
-        List<Component> components = componentQueryService.execute(getComponentByRequirement);
+        List<Component> components = componentContextFacade.getComponentQueryService().execute(getComponentByRequirement);
         if (components.isEmpty()){
             return ResponseEntity.notFound().build();
         }
